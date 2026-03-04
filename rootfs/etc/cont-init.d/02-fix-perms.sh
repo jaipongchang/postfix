@@ -23,7 +23,11 @@ chown root:root /data/postfix/queue/etc/nsswitch.conf
 chmod 750 /data/postfix/vmail
 
 mkdir -p -m o-rwx /var/run/rspamd
-chown rspamd:rspamd /var/run/rspamd
+mkdir -p /etc/rspamd/local.d
+chown rspamd:rspamd /var/run/rspamd  /etc/rspamd/local.d
 
-# Fix perms
-chown rspamd:rspamd /etc/rspamd /var/lib/rspamd
+mkdir -p /etc/postfix/sasl /etc/postfix/certs
+chown root:root /etc/postfix/sasl /etc/postfix/certs
+
+mkdir -p /var/lib/rspamd/dkim
+chown rspamd:rspamd /etc/rspamd /var/lib/rspamd /var/lib/rspamd/dkim
