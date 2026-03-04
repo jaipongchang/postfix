@@ -1,0 +1,3 @@
+# /etc/postfix/sender_access
+# Allow local sender
+root@localhost OK

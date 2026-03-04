@@ -1,0 +1,2 @@
+# /etc/postfix/virtual_alias_maps
+postmaster@mx.DOMAIN root

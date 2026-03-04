@@ -1,0 +1,46 @@
+name: postfix
+
+services:
+  postfix:
+    image: ghcr.io/jaipongchang/postfix:2.0
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: postfix
+    ports:
+      - target: 25
+        published: 2500
+        protocol: tcp
+      - target: 465
+        published: 4650
+        protocol: tcp
+      - target: 587
+        published: 5870
+        protocol: tcp
+      - target: 11334
+        published: 11334
+        protocol: tcp
+    volumes:
+      - "./configs/postfix/sasl/smtpd.conf:/etc/postfix/sasl/smtpd.conf:ro,Z"
+
+      - "./configs/postfix/main.cf:/etc/postfix/main.cf:ro,Z"
+      - "./configs/postfix/master.cf:/etc/postfix/master.cf:ro,Z"
+
+      - "./configs/postfix/aliases:/etc/postfix/aliases:ro,Z"
+      - "./configs/postfix/virtual_alias_maps:/etc/postfix/virtual_alias_maps:ro,Z"
+      - "./configs/postfix/virtual_mailbox_maps:/etc/postfix/virtual_mailbox_maps:ro,Z"
+      - "./configs/postfix/sender_access:/etc/postfix/sender_access:ro,Z"
+
+      - "./configs/rspamd/dkim/:/var/lib/rspamd/dkim/:ro,Z"
+      - "./configs/rspamd/local.d/:/etc/rspamd/local.d/:ro,Z"
+
+      - "./certs:/etc/postfix/certs:ro,Z"
+
+      - data:/data
+    env_file:
+      - "./.env"
+    restart: unless-stopped
+
+
+volumes:
+  data:

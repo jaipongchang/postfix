@@ -1,0 +1,2 @@
+# /etc/postfix/virtual_mailbox_maps
+postmaster@mx.DOMAIN postmaster/
