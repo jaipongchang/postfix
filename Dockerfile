@@ -36,7 +36,7 @@ RUN mkdir /s6-root && \
 
 FROM ${BASE_IMAGE}
 
-LABEL org.opencontainers.image.title="Postfix + Rspamd Mail Gateway"
+LABEL org.opencontainers.image.title="postfix"
 LABEL org.opencontainers.image.description="Production-ready mail relay with Postfix and Rspamd"
 LABEL org.opencontainers.image.vendor="Jaipongchang"
 LABEL org.opencontainers.image.licenses="MIT"
