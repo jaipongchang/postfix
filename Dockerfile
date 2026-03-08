@@ -37,7 +37,7 @@ RUN mkdir /s6-root && \
 FROM ${BASE_IMAGE}
 
 LABEL org.opencontainers.image.title="postfix"
-LABEL org.opencontainers.image.description="Production-ready mail relay with Postfix and Rspamd"
+LABEL org.opencontainers.image.description="Production-ready mail relay with Postfix"
 LABEL org.opencontainers.image.vendor="Jaipongchang"
 LABEL org.opencontainers.image.licenses="MIT"
 LABEL org.opencontainers.image.source="https://github.com/jaipongchang/postfix"
@@ -53,7 +53,6 @@ RUN apt-get update && \
         ca-certificates \
         tzdata \
         postfix \
-        rspamd \
         libsasl2-2 \
         libsasl2-modules \
         sasl2-bin \
@@ -67,9 +66,6 @@ RUN apt-get update && \
 ARG APP_UID=1000
 ARG APP_GID=1000
 
-RUN groupadd -g ${APP_GID} rspamd && \
-    useradd -u ${APP_UID} -g rspamd -r -s /usr/sbin/nologin rspamd
-
 # --------------------------------------------------------------
 # Copy s6-overlay from builder
 # --------------------------------------------------------------
@@ -80,10 +76,7 @@ COPY --from=builder /s6-root/ /
 # --------------------------------------------------------------
 RUN mkdir -p \
       /var/spool/postfix \
-      /var/lib/rspamd \
-      /etc/rspamd/local.d \
       /var/log/mail && \
-    chown -R rspamd:rspamd /var/lib/rspamd && \
     chown -R root:root /var/spool/postfix
 
 # --------------------------------------------------------------
@@ -110,7 +103,7 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
 # --------------------------------------------------------------
 # Exposed ports
 # --------------------------------------------------------------
-EXPOSE 25 587 11334
+EXPOSE 25 587
 
 # s6 must run as root (to start postfix properly)
 ENTRYPOINT ["/init"]

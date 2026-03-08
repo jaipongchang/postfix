@@ -31,9 +31,6 @@ services:
       - "./configs/postfix/virtual_mailbox_maps:/etc/postfix/virtual_mailbox_maps:ro,Z"
       - "./configs/postfix/sender_access:/etc/postfix/sender_access:ro,Z"
 
-      - "./configs/rspamd/dkim/:/var/lib/rspamd/dkim/:ro,Z"
-      - "./configs/rspamd/local.d/:/etc/rspamd/local.d/:ro,Z"
-
       - "./certs:/etc/postfix/certs:ro,Z"
 
       - data:/data
